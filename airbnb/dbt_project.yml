@@ -1,0 +1,46 @@
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'airbnb' # tên của project dbt
+version: '1.0.0'
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'airbnb'
+# EN-ver
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+#----------------------------------
+# VN-ver
+# Cấu hình chỉ định thư mục nơi dbt tìm đến và xử lý
+model-paths: ["models"] # model là các job dbt transform nơi dev dùng để định nghĩa các phép biến đổi dữ liệu
+analysis-paths: ["analyses"]
+test-paths: ["tests"] # test là nơi chứa các kết quả test job dbt
+seed-paths: ["seeds"]
+macro-paths: ["macros"] # macro là thư mục chứa các đoạn code macro tự sinh mã phụ thuộc cho dbt
+snapshot-paths: ["snapshots"]
+
+# Các thư mục sẽ bị xóa khi chạy lệnh `dbt clean`
+clean-targets:         
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
+# -------------------
+# Nơi dev thực hiện định nghĩa các model ở dạng nào: view, table ...etc..
+models:
+  airbnb:
+    # Config indicated by + and applies to all files under models/example/
+    +materialized: view
+    dim:
+      +materialized: view
+    src:
+      +materialized: ephemeral
+      
