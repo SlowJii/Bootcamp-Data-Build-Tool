@@ -1,0 +1,17 @@
+# Snapshot bảng nguồn raw listings từ nguồn Airbnb với chiến lược track timestamp, đưa về các bản snapshot chứa dữ liệu mới nhất
+snapshots:
+  - name: scd_raw_listings_snapshot
+    relation: source('airbnb', 'listings')
+    config:
+      unique_key: id # cột dùng để track bản ghi
+      updated_at: updated_at # cột track theo timestamp
+      strategy: timestamp # chiến lược snapshot theo timestamp
+      hard_deletes: invalidate # xử lý hard delete bằng cách đánh dấu bản ghi là không hợp lệ
+
+  - name: scd_raw_hosts_snapshot
+    relation: source('airbnb', 'hosts')
+    config:
+      unique_key: id
+      updated_at: updated_at
+      strategy: timestamp
+      hard_deletes: invalidate
