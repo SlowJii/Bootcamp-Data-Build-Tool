@@ -27,3 +27,31 @@ models:
       - name: price
         data_tests:
           - not_null
+  
+  - name: dim_hosts_cleansed
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: host_id
+        data_type: integer
+        constraint:
+          - type : not_null
+          - type: primary_key
+      - name: is_superhost
+        data_type: string
+        constraint:
+          - type: check
+            expression: "is_superhost IN ('t','f')"
+      - name: created_at
+        data_type: timestamp
+        constraint:
+          - type: not_null
+      - name: updated_at
+        data_type: timestamp
+        constraint:
+          - type: not_null
+      - name: host_name
+        data_type: string
+        constraint:
+          - type: not_null
